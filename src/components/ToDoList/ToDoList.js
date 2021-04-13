@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ListGroup } from "react-bootstrap";
-import Task from "components/Task";
-
+import { v4 as uuidv4 } from 'uuid'
 import TaskModel from 'models/Task'
+
+import Task from "components/Task";
 import H1 from "components/shared/H1";
+import NewTask from "components/NewTask";
 
 // Simulation de récupération API
 const initialList = [
@@ -21,11 +23,16 @@ const ToDoList = () => {
     setList((oldList) => oldList.map((t) => t.id === task.id ? { ...t, completed: !t.completed } : t))
   }
 
+  const addTask = (task) => {
+    setList([...list, new TaskModel({ ...task, id: uuidv4() })])
+  }
+
   return <>
     <H1>To Do List</H1>
     <ListGroup>
       {list.map((task) => <Task key={task.id} task={new TaskModel(task)} update={updateCompleted}></Task>)}
     </ListGroup>
+    <NewTask add={addTask} />
   </>;
 };
 
