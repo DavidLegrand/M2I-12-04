@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import H1 from "components/shared/H1";
 import { Form, Button, Row, Col } from 'react-bootstrap'
+import TaskModel from "models/Task";
 
 const NewTask = ({ add }) => {
-  const initialForm = { title: '', description: '', completed: false, deadline: new Date() }
+  const initialForm = new TaskModel()
   const [form, setForm] = useState(initialForm)
 
   const handleSubmit = (e) => {
