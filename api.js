@@ -1,7 +1,9 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 const list = [
   { id: 1, title: "Faire marcher la list", description: "Arriver à afficher cette liste grâce à un map", priority: "Haute", completed: true },
@@ -11,6 +13,10 @@ const list = [
 
 app.get('/api/todolist', (req, res) => {
   res.send(list)
+})
+
+app.post('/*', (req, res) => {
+  console.log("Frontend just sent : ", req.body)
 })
 
 app.listen(8000, () => console.log("backend is listening on http://localhost:8000/api/todolist"))

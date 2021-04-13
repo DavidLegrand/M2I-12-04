@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from 'contexts/User'
 import PropTypes from "prop-types";
 import { Badge, Button, ListGroupItem } from "react-bootstrap";
 import TaskModel from 'models/Task'
 
 const Task = ({ update, task }) => {
+  const { user } = useContext(UserContext)
 
   return (
     <ListGroupItem variant={task.getVariant()}>
@@ -17,6 +19,7 @@ const Task = ({ update, task }) => {
       </Badge>
 
       <p>{task.description}</p>
+      <p>Assignée à {user.firstName} {user.lastName}</p>
       <p>Deadline : {task.deadline.toLocaleDateString()}</p>
       <p>Temps restant : {task.getRemaining()} jours</p>
 
