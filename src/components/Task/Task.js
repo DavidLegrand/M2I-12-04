@@ -5,7 +5,6 @@ import TaskModel from 'models/Task'
 
 const Task = ({ update, task }) => {
 
-
   return (
     <ListGroupItem variant={task.getVariant()}>
 
@@ -21,16 +20,14 @@ const Task = ({ update, task }) => {
       <p>Deadline : {task.deadline.toLocaleDateString()}</p>
       <p>Temps restant : {task.getRemaining()} jours</p>
 
-      <Button onClick={() => update(task)}>Terminer</Button>
-      <Button onClick={() => update(task)}>Annuler</Button>
-
+      <Button onClick={() => update(task)}>{task.completed ? "Annuler" : "Terminer"}</Button>
     </ListGroupItem>
   )
 };
+
 
 Task.propTypes = {
   update: PropTypes.func.isRequired,
   task: PropTypes.instanceOf(TaskModel).isRequired
 };
-
 export default Task;
