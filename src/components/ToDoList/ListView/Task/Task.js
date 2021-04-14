@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Badge, Button, ListGroupItem } from "react-bootstrap";
 import { getRemaining, getStatus, getVariant } from 'utils/tasks'
+
 const Task = ({ update, task }) => {
-
-
-  useEffect(() => console.log("Task re render ", task.title))
   return (
     <ListGroupItem variant={getVariant(task)}>
 
@@ -18,8 +16,8 @@ const Task = ({ update, task }) => {
       </Badge>
 
       <p>{task.description}</p>
-      <p>Deadline : {task.deadline}</p>
-      {/* <p>Temps restant : {getRemaining(task)} jours</p> */}
+      <p>Deadline : {new Date(task.deadline).toLocaleDateString()}</p>
+      <p>Temps restant : {getRemaining(task)} jours</p>
 
       <Button onClick={() => update(task)}>{task.completed ? "Annuler" : "Terminer"}</Button>
 

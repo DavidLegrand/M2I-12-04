@@ -25,10 +25,9 @@ class TaskModel {
 
     if (obj.deadline)
       obj.deadline = new Date(obj.deadline);
-
+      
     Object.assign(this, { ...defaults, ...obj });
   }
-
 }
 
 module.exports = TaskModel

@@ -3,8 +3,6 @@ import { Col, Container, Row } from 'react-bootstrap';
 import './App.css';
 import ToDoList from 'components/ToDoList'
 import { UserProvider } from 'contexts/User'
-import Parent from 'components/Parent'
-
 
 
 function App() {
@@ -14,7 +12,6 @@ function App() {
         <Container>
           <Row>
             <Col>
-              {/* <Parent></Parent> */}
               <ToDoList />
             </Col>
           </Row>

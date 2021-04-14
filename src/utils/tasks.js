@@ -1,7 +1,7 @@
 
 function getRemaining(task) {
   return Math.ceil(
-    (task.deadline.getTime() - new Date().getTime()) / (1000 * 3600 * 24)
+    (new Date(task.deadline).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
   );
 }
 

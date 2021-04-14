@@ -1,41 +1,39 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-
-import API from 'api'
-import axios from 'axios'
-
 import NewTask from "components/ToDoList/NewTask";
 import ListView from "./ListView";
 
+import { useSelector, useDispatch } from 'react-redux'
+import TODOS_GET from 'store/actions/todos'
+
 const ToDoList = () => {
 
-  const [list, setList] = useState([])
+  const todos = useSelector(state => state.todos)
+  const dispatch = useDispatch()
+
   const [numTask, setNumTask] = useState(0)
 
   useEffect(() => {
-    axios.get(API)
-      .then(response => setList(response.data))
-      .catch(err => console.error(err))
+    dispatch(TODOS_GET())
   }, [])
 
   useEffect(() => {
-    console.log(list)
-    setNumTask(list.filter(t => !t.completed).length)
-  }, [list])
+    setNumTask(todos.list.filter(t => !t.completed).length)
+  }, [todos.list])
 
   const updateCompleted = useCallback(
     (task) => {
-      setList((oldList) => oldList.map((t) => t.id === task.id ? { ...t, completed: !t.completed } : t))
+      //setList((oldList) => oldList.map((t) => t.id === task.id ? { ...t, completed: !t.completed } : t))
     },
     []
   )
 
   const addTask = (task) => {
-    setList([...list, { ...task }])
+    //setList([...todos.list, { ...task }])
   }
 
   return <>
-    <ListView list={list} updateCompleted={updateCompleted} numTask={numTask} />
+    <ListView loading={todos.loading} list={todos.list} updateCompleted={updateCompleted} numTask={numTask} />
     <NewTask add={addTask} />
   </>;
 };

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import H1 from "components/shared/H1";
+import Page from "components/shared/Page";
+import Input from "components/shared/Input";
 import { Form, Button, Row, Col } from 'react-bootstrap'
 
 const NewTask = ({ add }) => {
   const initialForm = { title: '', description: '', completed: false, deadline: new Date() }
   const [form, setForm] = useState(initialForm)
-
-  //  useTitle(`Nouvelle tâche : ${form.title}`)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -23,36 +22,16 @@ const NewTask = ({ add }) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <H1>Nouvelle tâche</H1>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">Titre : </Form.Label>
-          <Col sm="10">
-            <Form.Control name="title" type="text" value={form.title} onChange={handleChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">Description : </Form.Label>
-          <Col sm="10">
-            <Form.Control name="description" type="text" value={form.description} onChange={handleChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">Deadline : </Form.Label>
-          <Col sm="10">
-            <Form.Control name="deadline" type="date" value={form.deadline} onChange={handleChange} />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">Terminée ? : </Form.Label>
-          <Col sm="10">
-            <Form.Check name="completed" type="checkbox" checked={form.completed} onChange={handleChange} label={form.completed ? "Terminée" : "En cours"} />
-          </Col>
-        </Form.Group>
-        <Form.Group>
-          <Button type="submit">Ajouter</Button>
-        </Form.Group>
-      </Form>
+      <Page title="Nouvelle tâche">
+        <Form onSubmit={handleSubmit}>
+          <Input label="Titre" name="title" value={form.title} type="text" handler={handleChange} />
+          <Input label="Description" name="description" value={form.description} type="text" handler={handleChange} />
+          <Input label="Deadline" name="deadline" value={new Date(form.deadline).toISOString().split("T")[0]} type="date" handler={handleChange} />
+          <Input label="Terminée ?" name="completed" value={form.completed} type="checkbox" handler={handleChange} checkLabel={form.completed ? "Terminée" : "En cours"} />
+          <Form.Group><Button type="submit">Ajouter</Button></Form.Group>
+        </Form>
+      </Page>
+
     </>
   )
 };

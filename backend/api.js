@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const TaskModel = require('./models/Task')
+const path = require('path')
 
 const v4 = require('uuid').v4
 
@@ -16,6 +17,7 @@ const list = [
     priority: "Haute",
     completed: true
   }),
+
   new TaskModel({
     id: v4(),
     title: "Comprendre les props",
@@ -34,8 +36,5 @@ app.get('/api/todolist', (req, res) => {
   res.send(list)
 })
 
-app.post('/*', (req, res) => {
-  console.log("Frontend just sent : ", req.body)
-})
 
 app.listen(8000, () => console.log("backend is listening on http://localhost:8000/api/todolist"))
