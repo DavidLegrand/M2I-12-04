@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useCallback } from "react";
 
-import { v4 as uuidv4 } from 'uuid'
 
 import API from 'api'
 import axios from 'axios'
@@ -12,6 +10,7 @@ import ListView from "./ListView";
 const ToDoList = () => {
 
   const [list, setList] = useState([])
+  const [numTask, setNumTask] = useState(0)
 
   useEffect(() => {
     axios.get(API)
@@ -20,25 +19,25 @@ const ToDoList = () => {
   }, [])
 
   useEffect(() => {
-    axios.post(API, { message: "Coucou from frontend" })
+    console.log(list)
+    setNumTask(list.filter(t => !t.completed).length)
   }, [list])
 
-  const updateCompleted = (task) => {
-    setList((oldList) => oldList.map((t) => t.id === task.id ? { ...t, completed: !t.completed } : t))
-  }
+  const updateCompleted = useCallback(
+    (task) => {
+      setList((oldList) => oldList.map((t) => t.id === task.id ? { ...t, completed: !t.completed } : t))
+    },
+    []
+  )
 
   const addTask = (task) => {
-    setList([...list, { ...task, id: uuidv4() }])
+    setList([...list, { ...task }])
   }
 
   return <>
-    <ListView list={list} updateCompleted={updateCompleted} />
+    <ListView list={list} updateCompleted={updateCompleted} numTask={numTask} />
     <NewTask add={addTask} />
   </>;
-};
-
-ToDoList.propTypes = {
-  //
 };
 
 export default ToDoList;

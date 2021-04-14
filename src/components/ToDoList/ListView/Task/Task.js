@@ -1,29 +1,28 @@
-import React, { useContext } from "react";
-import { UserContext } from 'contexts/User'
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Badge, Button, ListGroupItem } from "react-bootstrap";
-import TaskModel from 'models/Task'
-
+import { getRemaining, getStatus, getVariant } from 'utils/tasks'
 const Task = ({ update, task }) => {
-  const { user } = useContext(UserContext)
 
+
+  useEffect(() => console.log("Task re render ", task.title))
   return (
-    <ListGroupItem variant={task.getVariant()}>
+    <ListGroupItem variant={getVariant(task)}>
 
       <h2 className="d-inline">
         {task.title}
       </h2>
 
-      <Badge className="float-right" variant={task.getVariant()}>
-        {task.getStatus()}
+      <Badge className="float-right" variant={getVariant(task)}>
+        {getStatus(task)}
       </Badge>
 
       <p>{task.description}</p>
-      <p>Assignée à {user.firstName} {user.lastName}</p>
-      <p>Deadline : {task.deadline.toLocaleDateString()}</p>
-      <p>Temps restant : {task.getRemaining()} jours</p>
+      <p>Deadline : {task.deadline}</p>
+      {/* <p>Temps restant : {getRemaining(task)} jours</p> */}
 
       <Button onClick={() => update(task)}>{task.completed ? "Annuler" : "Terminer"}</Button>
+
     </ListGroupItem>
   )
 };
@@ -31,6 +30,6 @@ const Task = ({ update, task }) => {
 
 Task.propTypes = {
   update: PropTypes.func.isRequired,
-  task: PropTypes.instanceOf(TaskModel).isRequired
+  task: PropTypes.object.isRequired
 };
-export default Task;
+export default React.memo(Task);

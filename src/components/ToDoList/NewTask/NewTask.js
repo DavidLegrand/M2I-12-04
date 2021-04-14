@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import H1 from "components/shared/H1";
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import TaskModel from "models/Task";
 
 const NewTask = ({ add }) => {
-  const initialForm = new TaskModel()
+  const initialForm = { title: '', description: '', completed: false, deadline: new Date() }
   const [form, setForm] = useState(initialForm)
+
+  //  useTitle(`Nouvelle tâche : ${form.title}`)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -57,7 +58,7 @@ const NewTask = ({ add }) => {
 };
 
 NewTask.propTypes = {
-  //
+  add: PropTypes.func.isRequired
 };
 
 export default NewTask;
